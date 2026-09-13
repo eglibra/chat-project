@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scène 5</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body { 
+            margin: 0; 
+            height: 100vh; 
+            overflow: hidden; 
+            background: #000; 
+            color: white; 
+            text-align: center; 
+            font-size: 24px;
+            padding-top: 20px;
+        }
+        .firework { 
+            position: absolute; 
+            width: 10px; 
+            height: 10px; 
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <p>Bravo, {{ name }} ! Vous avez atteint le Village Cocorico !</p>
+    
+    <script>
+        confetti({
+            particleCount: 200,
+            spread: 120,
+            origin: { y: 0 }
+        });
+
+        function createFirework() {
+            const firework = document.createElement('div');
+            firework.className = 'firework';
+            firework.style.left = Math.random() * 100 + '%';
+            firework.style.top = '80%';
+            firework.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            document.body.appendChild(firework);
+
+            const animation = firework.animate([
+                { transform: 'translateY(0) scale(1)', opacity: 1 },
+                { transform: 'translateY(-300px) scale(0)', opacity: 0 }
+            ], {
+                duration: 800 + Math.random() * 600,
+                easing: 'cubic-bezier(0.1, 0.8, 0.2, 1)'
+            });
+
+            animation.onfinish = () => firework.remove();
+        }
+
+        setInterval(createFirework, 150);
+        setInterval(() => {
+            confetti({
+                particleCount: 3,
+                angle: 60,
+                spread: 55,
+                origin: { x: 0 }
+            });
+            confetti({
+                particleCount: 3,
+                angle: 120,
+                spread: 55,
+                origin: { x: 1 }
+            });
+        }, 100);
+    </script>
+</body>
+</html>
